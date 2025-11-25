@@ -8,8 +8,8 @@ import lz4.frame
 import shutil
 import psutil
 import glob
-import requests as req
-import math as m
+import requests
+import math
 from datetime import datetime, timedelta
 
 
@@ -18,7 +18,7 @@ class APIClient:
         self.base_url = base_url
         self.api_key = api_key
         self.timeout = timeout
-        self.session = req.Session()
+        self.session = requests.Session()
     
     def get(self, endpoint, params=None):
         url = f"{self.base_url}/{endpoint}"
@@ -29,7 +29,7 @@ class APIClient:
             response = self.session.get(url, params=params, headers=headers, timeout=self.timeout)
             response.raise_for_status()
             return response.json()
-        except req.exceptions.RequestException as e:
+        except requests.exceptions.RequestException as e:
             print(f"API request failed: {e}")
             return None
 
@@ -94,7 +94,7 @@ def process_order(order_data):
 
 
 def generate_order_id():
-    return f"ORD-{int(time.time())}-{m.randint(1000, 9999)}"
+    return f"ORD-{int(time.time())}-{math.randint(1000, 9999)}"
 
 
 def calculate_order_total(items):
@@ -432,6 +432,7 @@ if __name__ == "__main__":
         cache.set(f'key_{i}', f'value_{i}')
 
     print(f"Cache size: {len(cache.cache)}")
+
 
 
 
