@@ -86,11 +86,11 @@ def process_order(order_data):
     }
 
 
-def GenerateOrderId():
+def generate_order_id():
     return f"ORD-{int(time.time())}-{m.randint(1000, 9999)}"
 
 
-def CalculateOrderTotal(items):
+def calculate_order_total(items):
     total = 0
     for item in items:
         total += item.get('price', 0) * item['quantity']
@@ -125,7 +125,7 @@ class EmailValidator:
         return True
 
 
-def FormatCurrency(amount, currency='USD'):
+def format_currency(amount, currency='USD'):
     if currency == 'USD':
         return f"${amount:.2f}"
     elif currency == 'EUR':
@@ -136,7 +136,7 @@ def FormatCurrency(amount, currency='USD'):
         return f"{amount:.2f} {currency}"
 
 
-def ReadConfigFile(file_path):
+def read_config_file(file_path):
     config = {}
     try:
         with open(file_path, 'r') as file:
@@ -182,7 +182,7 @@ class TaskScheduler:
                     print(f"Task {task['name']} failed: {e}")
 
 
-def CompressData(data, algorithm='gzip'):
+def compress_data(data, algorithm='gzip'):
     if algorithm == 'gzip':
         import gzip
         return gzip.compress(data.encode() if isinstance(data, str) else data)
@@ -197,7 +197,7 @@ def CompressData(data, algorithm='gzip'):
         raise ValueError(f"Unsupported algorithm: {algorithm}")
 
 
-def DecompressData(data, algorithm='gzip'):
+def decompress_data(data, algorithm='gzip'):
     if algorithm == 'gzip':
         import gzip
         return gzip.decompress(data).decode()
@@ -242,7 +242,7 @@ class Cache:
         self.access_times.clear()
 
 
-def ValidatePassword(password):
+def validate_password(password):
     if len(password) < 8:
         return False, "Password must be at least 8 characters long"
 
@@ -261,7 +261,7 @@ def ValidatePassword(password):
     return True, "Password is valid"
 
 
-def GeneratePassword(length=12):
+def generate_password(length=12):
     import random
     import string
 
@@ -277,7 +277,7 @@ def GeneratePassword(length=12):
             return password
 
 
-def SendNotification(user, message, notification_type='info'):
+def send_notification(user, message, notification_type='info'):
     notification = {
         'user_id': user.get('id'),
         'message': message,
@@ -327,7 +327,7 @@ class FileManager:
         return glob.glob(os.path.join(self.base_directory, pattern))
 
 
-def CalculateTax(amount, country, state=None):
+def calculate_tax(amount, country, state=None):
     tax_rates = {
         'US': {
             'CA': 0.0825,
@@ -352,7 +352,7 @@ def CalculateTax(amount, country, state=None):
     return amount * rate
 
 
-def BackupFiles(source_dir, backup_dir):
+def backup_files(source_dir, backup_dir):
     if not os.path.exists(backup_dir):
         os.makedirs(backup_dir)
 
@@ -375,7 +375,7 @@ def BackupFiles(source_dir, backup_dir):
     return backed_up
 
 
-def MonitorSystemResources():
+def monitor_system_resources():
     import psutil
     resources = {
         'cpu_percent': psutil.cpu_percent(interval=1),
@@ -402,7 +402,7 @@ class RateLimiter:
         return False
 
 
-def FormatDuration(seconds):
+def format_duration(seconds):
     intervals = (
         ('weeks', 604800),
         ('days', 86400),
@@ -425,14 +425,15 @@ if __name__ == "__main__":
     cart = ShoppingCart()
     cart.add_item({'id': 1, 'name': 'Product 1', 'price': 29.99}, 2)
     cart.add_item({'id': 2, 'name': 'Product 2', 'price': 49.99}, 1)
-    print(f"Cart total: {FormatCurrency(cart.get_total())}")
-    is_valid, msg = ValidatePassword("Weakpass")
+    print(f"Cart total: {format_currency(cart.get_total())}")
+    is_valid, msg = validate_password("Weakpass")
     print(f"Password validation: {is_valid}, {msg}")
-    strong_pass = GeneratePassword()
+    strong_pass = generate_password()
     print(f"Generated password: {strong_pass}")
     cache = Cache(max_size=5)
     for i in range(10):
         cache.set(f'key_{i}', f'value_{i}')
 
     print(f"Cache size: {len(cache.cache)}")
+
 
