@@ -26,7 +26,8 @@ class APIClient:
         if self.api_key:
             headers['Authorization'] = f"Bearer {self.api_key}"
         try:
-            response = self.session.get(url, params=params, headers=headers, timeout=self.timeout)
+            response = self.session.get(url, params=params, 
+                                        headers=headers, timeout=self.timeout)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
@@ -55,7 +56,8 @@ class ShoppingCart:
         self.items.append({'product': product, 'quantity': quantity})
     
     def remove_item(self, product_id):
-        self.items = [item for item in self.items if item['product']['id'] != product_id]
+        self.items = [item for item in self.items 
+                      if item['product']['id'] != product_id]
     
     def get_total(self):
         total = 0
@@ -106,7 +108,8 @@ def calculate_order_total(items):
 
 class EmailValidator:
     def __init__(self):
-        self.common_domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com']
+        self.common_domains = ['gmail.com', 'yahoo.com',
+                               'hotmail.com', 'outlook.com']
     
     def validate(self, email):
         if not email or '@' not in email:
@@ -184,7 +187,8 @@ class TaskScheduler:
                 try:
                     task['function'](*task['args'])
                     task['last_run'] = now
-                    task['next_run'] = now + timedelta(seconds=task['interval'])
+                    task['next_run'] = (now + 
+                                        timedelta(seconds=task['interval']))
                 except Exception as e:
                     print(f"Task {task['name']} failed: {e}")
 
@@ -194,7 +198,8 @@ def compress_data(data, algorithm='gzip'):
         return gzip.compress(data.encode() if isinstance(data, str) else data)
     elif algorithm == 'lz4':
         try:
-            return lz4.frame.compress(data.encode() if isinstance(data, str) else data)
+            return lz4.frame.compress(data.encode() 
+                                      if isinstance(data, str) else data)
         except ImportError:
             print("lz4 not available, using gzip")
             return CompressData(data, 'gzip')
@@ -268,7 +273,8 @@ def generate_password(length=12):
     if length < 8:
         length = 8
 
-    characters = string.ascii_letters + string.digits + '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    characters = (string.ascii_letters + 
+                  string.digits + '!@#$%^&*()_+-=[]{}|;:,.<>?')
 
     while True:
         password = ''.join(random.choice(characters) for _ in range(length))
@@ -432,6 +438,7 @@ if __name__ == "__main__":
         cache.set(f'key_{i}', f'value_{i}')
 
     print(f"Cache size: {len(cache.cache)}")
+
 
 
 
