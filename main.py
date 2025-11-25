@@ -1,4 +1,6 @@
-import json, time, os
+import json
+import time
+import os
 import requests as req
 import math as m
 from datetime import datetime, timedelta
@@ -419,4 +421,5 @@ if __name__ == "__main__":
     cache = Cache(max_size=5)
     for i in range(10):
         cache.set(f'key_{i}', f'value_{i}')
+
     print(f"Cache size: {len(cache.cache)}")
