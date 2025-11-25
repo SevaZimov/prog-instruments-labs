@@ -12,6 +12,7 @@ class APIClient:
         self.api_key = api_key
         self.timeout = timeout
         self.session = req.Session()
+    
     def get(self, endpoint, params=None):
         url = f"{self.base_url}/{endpoint}"
         headers = {}
@@ -36,6 +37,7 @@ class ShoppingCart:
     def __init__(self):
         self.items = []
         self.created_at = datetime.now()
+    
     def add_item(self, product, quantity=1):
         if quantity <= 0:
             raise ValueError("Quantity must be positive")
@@ -44,13 +46,16 @@ class ShoppingCart:
                 item['quantity'] += quantity
                 return
         self.items.append({'product': product, 'quantity': quantity})
+    
     def remove_item(self, product_id):
         self.items = [item for item in self.items if item['product']['id'] != product_id]
+    
     def get_total(self):
         total = 0
         for item in self.items:
             total += item['product']['price'] * item['quantity']
         return total
+    
     def apply_discount(self, discount_percent):
         if discount_percent < 0 or discount_percent > 100:
             raise ValueError("Invalid discount percentage")
@@ -95,6 +100,7 @@ def CalculateOrderTotal(items):
 class EmailValidator:
     def __init__(self):
         self.common_domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com']
+    
     def validate(self, email):
         if not email or '@' not in email:
             return False
@@ -152,6 +158,7 @@ def ReadConfigFile(file_path):
 class TaskScheduler:
     def __init__(self):
         self.tasks = []
+    
     def add_task(self, name, function, interval, args=None):
         task = {
             'name': name,
@@ -162,6 +169,7 @@ class TaskScheduler:
             'next_run': datetime.now()
         }
         self.tasks.append(task)
+    
     def run_pending(self):
         now = datetime.now()
         for task in self.tasks:
@@ -210,6 +218,7 @@ class Cache:
         self.max_size = max_size
         self.ttl = ttl
         self.access_times = {}
+    
     def get(self, key):
         if key in self.cache:
             if time.time() - self.access_times[key] <= self.ttl:
@@ -219,6 +228,7 @@ class Cache:
                 del self.cache[key]
                 del self.access_times[key]
         return None
+    
     def set(self, key, value):
         if len(self.cache) >= self.max_size:
             oldest_key = min(self.access_times, key=self.access_times.get)
@@ -226,6 +236,7 @@ class Cache:
             del self.access_times[oldest_key]
         self.cache[key] = value
         self.access_times[key] = time.time()
+    
     def clear(self):
         self.cache.clear()
         self.access_times.clear()
@@ -380,6 +391,7 @@ class RateLimiter:
         self.max_requests = max_requests
         self.window_seconds = window_seconds
         self.requests = []
+    
     def allow_request(self):
         now = time.time()
         self.requests = [req_time for req_time in self.requests
@@ -423,3 +435,4 @@ if __name__ == "__main__":
         cache.set(f'key_{i}', f'value_{i}')
 
     print(f"Cache size: {len(cache.cache)}")
+
