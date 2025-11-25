@@ -1,6 +1,13 @@
 import json
 import time
 import os
+import random
+import string
+import gzip
+import lz4.frame
+import shutil
+import psutil
+import glob
 import requests as req
 import math as m
 from datetime import datetime, timedelta
@@ -184,11 +191,9 @@ class TaskScheduler:
 
 def compress_data(data, algorithm='gzip'):
     if algorithm == 'gzip':
-        import gzip
         return gzip.compress(data.encode() if isinstance(data, str) else data)
     elif algorithm == 'lz4':
         try:
-            import lz4.frame
             return lz4.frame.compress(data.encode() if isinstance(data, str) else data)
         except ImportError:
             print("lz4 not available, using gzip")
@@ -199,11 +204,9 @@ def compress_data(data, algorithm='gzip'):
 
 def decompress_data(data, algorithm='gzip'):
     if algorithm == 'gzip':
-        import gzip
         return gzip.decompress(data).decode()
     elif algorithm == 'lz4':
         try:
-            import lz4.frame
             return lz4.frame.decompress(data).decode()
         except ImportError:
             print("lz4 not available, using gzip")
@@ -262,9 +265,6 @@ def validate_password(password):
 
 
 def generate_password(length=12):
-    import random
-    import string
-
     if length < 8:
         length = 8
 
@@ -323,7 +323,6 @@ class FileManager:
             return None
 
     def list_files(self, pattern="*"):
-        import glob
         return glob.glob(os.path.join(self.base_directory, pattern))
 
 
@@ -366,7 +365,6 @@ def backup_files(source_dir, backup_dir):
             os.makedirs(os.path.dirname(backup_path), exist_ok=True)
 
             try:
-                import shutil
                 shutil.copy2(source_path, backup_path)
                 backed_up += 1
             except Exception as e:
@@ -376,7 +374,6 @@ def backup_files(source_dir, backup_dir):
 
 
 def monitor_system_resources():
-    import psutil
     resources = {
         'cpu_percent': psutil.cpu_percent(interval=1),
         'memory_percent': psutil.virtual_memory().percent,
@@ -435,5 +432,6 @@ if __name__ == "__main__":
         cache.set(f'key_{i}', f'value_{i}')
 
     print(f"Cache size: {len(cache.cache)}")
+
 
 
