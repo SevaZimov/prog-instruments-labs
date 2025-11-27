@@ -88,10 +88,10 @@ def process_order(order_data):
             raise ValueError("Quantity must be positive")
 
     return {
-        'order_id': GenerateOrderId(),
+        'order_id': generate_order_id(),
         'status': 'processed',
         'processed_at': datetime.now(),
-        'total_amount': CalculateOrderTotal(order_data['items'])
+        'total_amount': calculate_order_total(order_data['items'])
     }
 
 
@@ -202,7 +202,7 @@ def compress_data(data, algorithm='gzip'):
                                       if isinstance(data, str) else data)
         except ImportError:
             print("lz4 not available, using gzip")
-            return CompressData(data, 'gzip')
+            return compress_data(data, 'gzip')
     else:
         raise ValueError(f"Unsupported algorithm: {algorithm}")
 
@@ -215,7 +215,7 @@ def decompress_data(data, algorithm='gzip'):
             return lz4.frame.decompress(data).decode()
         except ImportError:
             print("lz4 not available, using gzip")
-            return DecompressData(data, 'gzip')
+            return decompress_data(data, 'gzip')
     else:
         raise ValueError(f"Unsupported algorithm: {algorithm}")
 
@@ -278,7 +278,7 @@ def generate_password(length=12):
 
     while True:
         password = ''.join(random.choice(characters) for _ in range(length))
-        is_valid, message = ValidatePassword(password)
+        is_valid, message = validate_password(password)
         if is_valid:
             return password
 
