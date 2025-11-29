@@ -12,14 +12,13 @@ class Config:
             raise ValueError(f"Missing path: {key}")
         return path
 
-    def require_key_len(self) -> str:
-        """Проверка наличия key_len"""
+    def get_key_len(self) -> str:
+        """Проверка наличия и значения key_len"""
         if not self.key_len:
             raise ValueError("key_len is required")
-        return self.key_len
-
-    def check_key_length(self) -> None:
-        """Проверка key_len на соответствие значениям"""
         if self.key_len not in ('128', '192', '256'):
             raise ValueError("Недопустимая длина ключа. "
                              "Допустимые значения: '128', '192', '256'")
+        return self.key_len
+
+

@@ -15,7 +15,7 @@ def mode_1(config: Config) -> None:
     :return:
     """
     print("\nРежим 1: Создание ключей")
-    key_len = int(config.require_key_len())
+    key_len = int(config.get_key_len())
     print(f"Генерация симметричного ключа {key_len} бит...")
     sim_key = gen_sim_key(key_len)
     print("Генерация асимметричных ключей RSA...")
