@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from typing import Dict, Any
 
+from config import Config
 from modes import mode_1, mode_2, mode_3
 
 
@@ -39,33 +40,12 @@ def json_loader(path: str) -> Dict[str, Any]:
     return config
 
 
-def mode_setup(config: Dict[str, Any], mode: int) -> None:
+def mode_check(mode: int) -> None:
     """Проверяет конфигурацию для выбранного режима работы.
-    :param config: Загруженная конфигурация
     :param mode: Режим работы программы (1, 2 или 3)
     """
-    match mode:
-        case 1:
-            required_paths = {'symmetric_key', 'public_key', 'secret_key'}
-            if 'key_len' not in config:
-                raise ValueError("Отсутствует параметр 'key_len'")
-            if config['key_len'] not in ('128', '192', '256'):
-                raise ValueError("Недопустимая длина ключа. "
-                               "Допустимые значения: '128', '192', '256'")
-        case 2:
-            required_paths = {'symmetric_key', 'secret_key',
-                            'initial_file', 'encrypted_file'}
-        case 3:
-            required_paths = {'symmetric_key', 'secret_key',
-                            'decrypted_file', 'encrypted_file'}
-            if 'key_len' not in config:
-                raise ValueError("Отсутствует параметр 'key_len'")
-        case _:
-            raise ValueError("Режим работы программы должен быть 1, 2 или 3")
-
-    missing_fields = required_paths - set(config['paths'].keys())
-    if missing_fields:
-        raise ValueError(f"Отсутствуют обязательные пути: {missing_fields}")
+    if mode not in (1,2,3):
+        raise ValueError(f"Режим программы должен соответствовать значениям 1, 2 или 3")
 
 
 def main() -> None:
@@ -74,14 +54,15 @@ def main() -> None:
     try:
         settings = json_loader(args.settings)
         mode = int(args.mode)
-        mode_setup(settings, mode)
-        match args.mode:
+        mode_check(mode)
+        config = Config(settings)
+        match mode:
             case '1':
-                mode_1(settings)
+                mode_1(config)
             case '2':
-                mode_2(settings)
+                mode_2(config)
             case '3':
-                mode_3(settings)
+                mode_3(config)
     except FileNotFoundError as e:
         print(f"Ошибка: файл не найден - {e}")
     except json.JSONDecodeError:
