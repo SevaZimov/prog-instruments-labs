@@ -4,6 +4,10 @@ from asymmetric import gen_asym_keys, serialize_asym_keys, encrypt_key, load_asy
 from file_utils import save_binary, read_txt, read_binary, save_txt
 from symmetric import gen_sim_key, encrypt_sim, decrypt_sim
 from config import Config
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def mode_1(config: Config) -> None:
@@ -14,6 +18,7 @@ def mode_1(config: Config) -> None:
     :param config: Настройки запуска сценария
     :return:
     """
+    logger.info("НАЧАЛО РЕЖИМА 1")
     print("\nРежим 1: Создание ключей")
     key_len = int(config.get_key_len())
     print(f"Генерация симметричного ключа {key_len} бит...")
@@ -40,6 +45,7 @@ def mode_2(config: Config) -> None:
     :param config: Настройки запуска сценария
     :return:
     """
+    logger.info("НАЧАЛО РЕЖИМА 2")
     print("\nРежим 2: Шифрование файла")
     private_key, public_key = load_asym_keys(
         config.get_path('secret_key'),
@@ -61,6 +67,7 @@ def mode_3(config: Config) -> None:
     :param config: Настройки запуска сценария
     :return:
     """
+    logger.info("НАЧАЛО РЕЖИМА 3")
     print("\nРежим 3: Расшифровка файла")
     private_key, _ = load_asym_keys(
         config.get_path('secret_key'),

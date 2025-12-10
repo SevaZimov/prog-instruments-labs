@@ -1,3 +1,7 @@
+import logging_config
+logging_config.setup_logging()
+import logging
+logger = logging.getLogger(__name__)
 import argparse
 import json
 from pathlib import Path
@@ -29,12 +33,14 @@ def json_loader(path: str) -> Dict[str, Any]:
     :return: Словарь с загруженными настройками.
     """
     if not Path(path).exists():
+        logger.error(f"Файл настроек не найден: {path}")
         raise FileNotFoundError(f"Файл {path} не найден")
 
     with open(path, 'r', encoding='utf-8') as f:
         config = json.load(f)
 
     if 'paths' not in config:
+        logger.error(f"Отсутствует секция 'paths' в конфиге")
         raise ValueError("Отсутствует секция 'paths' в конфиге")
 
     return config
@@ -45,12 +51,15 @@ def mode_check(mode: int) -> None:
     :param mode: Режим работы программы (1, 2 или 3)
     """
     if mode not in (1,2,3):
+        logger.error(f"Режим программы должен соответствовать значениям 1, 2 или 3")
         raise ValueError(f"Режим программы должен соответствовать значениям 1, 2 или 3")
 
 
 def main() -> None:
     """Основная функция программы."""
+    logger.info(f"Запуск программы...")
     args = setup_arg_parser()
+    logger.info(f"Получены аргументы: файл настроек='{args.settings}', режим={args.mode}")
     try:
         settings = json_loader(args.settings)
         mode = int(args.mode)
