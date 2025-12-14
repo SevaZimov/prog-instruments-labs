@@ -16,7 +16,7 @@ def find_errors(df, cleaning_rules):
 
 
 def main():
-    var = 11
+    var = 43
     rules = {
         'email': r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
         'height': r'^[1-2]\.\d{1,2}$',
@@ -30,7 +30,7 @@ def main():
         'time': r'^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\.[0-9]{6}$'
     }
     try:
-        df = pd.read_csv('11.csv',
+        df = pd.read_csv('43.csv',
                          encoding='utf-16',
                          delimiter=';',
                          engine='python')
