@@ -39,4 +39,6 @@ def decrypt_sim(encrypted_data: bytes, key: bytes) -> str:
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
     decryptor = cipher.decryptor()
     decrypted = decryptor.update(cipher_text) + decryptor.finalize()
+    unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
+    decrypted = unpadder.update(decrypted) + unpadder.finalize()
     return decrypted.decode("utf-8")
