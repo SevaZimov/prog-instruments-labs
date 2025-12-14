@@ -1,0 +1,38 @@
+08:17:13 - INFO     - __main__             - Запуск программы...
+08:17:13 - INFO     - __main__             - Получены аргументы: файл настроек='settings.json', режим=1
+08:17:13 - INFO     - config               - Config инициализирован. Длина ключа: 128
+08:17:13 - INFO     - modes                - НАЧАЛО РЕЖИМА 1
+08:17:13 - INFO     - config               - Длина ключа валидна: 128 бит
+08:17:13 - INFO     - symmetric            - Генерация симметричного ключа: 128 бит
+08:17:13 - INFO     - symmetric            - Симметричный ключ сгенерирован: 16 байт
+08:17:13 - INFO     - asymmetric           - Генерация пары RSA ключей (2048 бит)
+08:17:13 - INFO     - asymmetric           - RSA ключи успешно сгенерированы
+08:17:13 - INFO     - asymmetric           - Сериализация RSA ключей в PEM формат
+08:17:13 - INFO     - asymmetric           - Ключи сериализованы. приватный=1704 байт, публичный=451 байт
+08:17:13 - INFO     - file_utils           - Сохранение бинарного файла: example_path/private_key.pem (размер: 1704 байт)
+08:17:13 - INFO     - file_utils           - Файл успешно сохранен: example_path/private_key.pem
+08:17:13 - INFO     - file_utils           - Сохранение бинарного файла: example_path/public_key.pem (размер: 451 байт)
+08:17:13 - INFO     - file_utils           - Файл успешно сохранен: example_path/public_key.pem
+08:17:13 - INFO     - asymmetric           - Шифрование симметричного ключа RSA (размер ключа: 16 байт)
+08:17:13 - INFO     - asymmetric           - Ключ зашифрован. Размер зашифрованных данных: 256 байт
+08:17:13 - INFO     - file_utils           - Сохранение бинарного файла: example_path/sym_key.txt (размер: 256 байт)
+08:17:13 - INFO     - file_utils           - Файл успешно сохранен: example_path/sym_key.txt
+08:20:01 - INFO     - __main__             - Запуск программы...
+08:20:01 - INFO     - __main__             - Получены аргументы: файл настроек='settings.json', режим=1
+08:20:01 - INFO     - config               - Config инициализирован. Длина ключа: 128
+08:20:01 - INFO     - modes                - НАЧАЛО РЕЖИМА 1
+08:20:01 - INFO     - config               - Длина ключа валидна: 128 бит
+08:20:01 - INFO     - symmetric            - Генерация симметричного ключа: 128 бит
+08:20:01 - INFO     - symmetric            - Симметричный ключ сгенерирован: 16 байт
+08:20:01 - INFO     - asymmetric           - Генерация пары RSA ключей (2048 бит)
+08:20:01 - INFO     - asymmetric           - RSA ключи успешно сгенерированы
+08:20:01 - INFO     - asymmetric           - Сериализация RSA ключей в PEM формат
+08:20:01 - INFO     - asymmetric           - Ключи сериализованы. приватный=1704 байт, публичный=451 байт
+08:20:01 - INFO     - file_utils           - Сохранение бинарного файла: example_path/private_key.pem (размер: 1704 байт)
+08:20:01 - INFO     - file_utils           - Файл успешно сохранен: example_path/private_key.pem
+08:20:01 - INFO     - file_utils           - Сохранение бинарного файла: example_path/public_key.pem (размер: 451 байт)
+08:20:01 - INFO     - file_utils           - Файл успешно сохранен: example_path/public_key.pem
+08:20:01 - INFO     - asymmetric           - Шифрование симметричного ключа RSA (размер ключа: 16 байт)
+08:20:01 - INFO     - asymmetric           - Ключ зашифрован. Размер зашифрованных данных: 256 байт
+08:20:01 - INFO     - file_utils           - Сохранение бинарного файла: example_path/sym_key.txt (размер: 256 байт)
+08:20:01 - INFO     - file_utils           - Файл успешно сохранен: example_path/sym_key.txt
