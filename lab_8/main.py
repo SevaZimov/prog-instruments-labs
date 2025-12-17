@@ -15,7 +15,7 @@ async def check_domain(session: aiohttp.ClientSession, domain: str,
     :param semaphore:Глобальный семафор
     :return:
     """
-    async with ((semaphore)):
+    async with semaphore:
         result = {
             'domain': domain,
             'http_status': None,
