@@ -1,0 +1,3 @@
+paths:
+  encrypted_file: example_path/encrypted_file.txt
+  decrypted_file: example_path/decrypted_file.txt

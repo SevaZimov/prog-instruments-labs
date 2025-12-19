@@ -1,0 +1,4 @@
+paths:
+    symmetric_key: example_path/sym_key.txt
+    public_key: example_path/public_key.pem
+key_len: 256
