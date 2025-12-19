@@ -1,0 +1,11 @@
+{
+    "paths": {
+        "initial_file":"example_path/initial_file.txt",
+        "encrypted_file":"example_path/encrypted_file.txt",
+        "decrypted_file":"example_path/decrypted_file.txt",
+        "symmetric_key":"example_path/sym_key.txt",
+        "public_key":"example_path/public_key.pem",
+        "secret_key":"example_path/private_key.pem"
+    },
+    "key_len" : "128"
+}
