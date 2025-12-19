@@ -2,6 +2,7 @@ import argparse
 import json
 from pathlib import Path
 from typing import Dict, Any
+from omegaconf import OmegaConf
 
 from modes import mode_1, mode_2, mode_3
 
@@ -21,6 +22,18 @@ def setup_arg_parser() -> argparse.Namespace:
     )
     return parser.parse_args()
 
+
+def config_loader(base_path: str, mode: str) -> Dict[str, Any]:
+    """
+    Загрузка конфига для различных режимов работы
+    :param base_path: Путь к базовому конфигу
+    :param mode: Номер режима работы программы
+    :return: Словарь с конфигурацией работы программы
+    """
+    base = OmegaConf.load(base_path)
+    mode_config = OmegaConf.load(f"{base_path.replace('.yaml', f'_m{mode}')}.yaml")
+    config = OmegaConf.merge(base, mode_config)
+    return OmegaConf.to_container(config)
 
 def json_loader(path: str) -> Dict[str, Any]:
     """Загружает и проверяет JSON-файл с настройками.
@@ -72,9 +85,8 @@ def main() -> None:
     """Основная функция программы."""
     args = setup_arg_parser()
     try:
-        settings = json_loader(args.settings)
-        mode = int(args.mode)
-        mode_setup(settings, mode)
+        settings = config_loader(args.settings, args.mode)
+        mode_setup(settings, args.mode)
         match args.mode:
             case '1':
                 mode_1(settings)
