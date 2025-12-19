@@ -30,8 +30,13 @@ def config_loader(base_path: str, mode: str) -> Dict[str, Any]:
     :param mode: Номер режима работы программы
     :return: Словарь с конфигурацией работы программы
     """
+    if not Path(base_path).exists():
+        raise FileNotFoundError(f"Файл {base_path} не найден")
     base = OmegaConf.load(base_path)
-    mode_config = OmegaConf.load(f"{base_path.replace('.yaml', f'_m{mode}')}.yaml")
+    mode_path = f"{base_path.replace('.yaml', f'_m{mode}')}.yaml"
+    if not Path(mode_path).exists():
+        raise FileNotFoundError(f"Файл {mode_path} не найден")
+    mode_config = OmegaConf.load(mode_path)
     config = OmegaConf.merge(base, mode_config)
     return OmegaConf.to_container(config)
 
